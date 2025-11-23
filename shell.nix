@@ -17,10 +17,14 @@ let
     python.numpy
     python.pandas
     python.requests
+    python.google-genai
+    # python.keras
   ]);
   buildInputAlias = [
     pythonWithPackages
     pkgs.python3Packages.pip
+    pkgs.scrot
+    pkgs.wmctrl
   ];
 in
 pkgs.stdenv.mkDerivation {
