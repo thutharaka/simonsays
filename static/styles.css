@@ -91,7 +91,7 @@ h1, h2, h3, p {
     position: fixed;
     top: 0;
     left: 0;
-    width: 32%;
+    width: 25%;
     height: 100vh;
     background-color: #88736F;
     padding: 20px;
@@ -114,11 +114,11 @@ h1, h2, h3, p {
     align-items: center;
     justify-content: space-between;
     background-color: #88736F;
-    margin-bottom: 10px;
+    //margin-bottom: 10px;
     margin-top: 10px;
     padding: 10px;
     border-radius: 8px;
-    border: 2px solid rgba(88, 71, 65);
+    // border: 2px solid rgba(88, 71, 65);
 }
 
 .task-item.empty {
@@ -191,7 +191,8 @@ h1, h2, h3, p {
 }
 
 .image {
-    max-width: 200px;
+    margin-top: 50px;
+    max-width: 350px;
     height: auto;
 }
 

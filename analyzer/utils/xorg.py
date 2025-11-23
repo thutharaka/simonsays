@@ -50,15 +50,11 @@ def get_current_windows() -> list[dict]:
 def get_window_at_coords(x: int, y: int, windows, stacking_list) -> tuple:
     """ Returns the xorg hex, PID of the window at coords """
     potential_windows = []
-    print(windows)
     for window in windows:
         is_within_window = (
             x >= window["column_min"] and x <= window["column_max"] and
             y >= window["row_min"] and y <= window["row_max"]
         )
-        print(f"{window["xorg_hex"]}: {is_within_window}")
-        print(f"{x} >= {window['column_min']} and {x} <= {window['column_max']}")
-        print(f"{y} >= {window['row_min']} and {y} <= {window['row_max']}")
         if is_within_window:
             potential_windows.append((window["xorg_hex"], window["pid"]))
 
@@ -83,5 +79,13 @@ def notify(title: str, msg: str):
         'notify-send', title, msg #, '--replace-id', '42069'
     ])
 
+
+def simon_disappoint():
+    """ Simon is disappointed """
+    subprocess.Popen(['google-chrome-stable', '127.0.0.1:5000/simonsays'])
+
+
+def toggle_wallpaper():
+    subprocess.Popen(['bash', '/home/ian/lib/bin/simonsays/analyzer/temp_wallpaper.sh'])
 
 # TODO do not kill if Simon says tab is currently active

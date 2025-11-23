@@ -1,5 +1,5 @@
 import json
-import options
+import analyzer.options as options
 
 # TODO don't hardcode this dingus
 IMG_WIDTH = 1920
@@ -57,7 +57,7 @@ def cluster():
     # - make a vertical square and 2 horizontal squares for query
     # - TODO make a x pos index and y pos index for the OCR & sort in order, this will speed up queries
     BUFFER_HORIZONTAL=25
-    BUFFER_VERTICAL=50
+    BUFFER_VERTICAL=100
     
     ocrs = ocr_json["texts"]
     clusters = []

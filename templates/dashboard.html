@@ -14,7 +14,7 @@
         <h2>Tasks</h2>
         <ul class="task-list">
             {% for task in tasks %}
-                <li class="task-item">{{ task }}</li>
+                <li class="task-item">- {{ task }}</li>
             {% else %}
                 <li class="task-item empty">No tasks yet</li>
             {% endfor %}
@@ -22,7 +22,7 @@
     </div>
 
     <!-- MIDDLE PANEL (Health and Reflection) -->
-    <div class="middle-panel">
+    <div class="right-panel">
         <div class="health-box">
             <h3>Health</h3>
             <ul class="health-list">
@@ -40,11 +40,12 @@
     </div>
 
     <!-- RIGHT PANEL (Image, Start/Stop, Add Task) -->
-    <div class="right-panel">
+    <div class="middle-panel">
         <div class="image-container">
             <img src="{{ url_for('static', filename='simon.png') }}" alt="Health Image" class="image">
         </div>
         <div class="streak-panel small">
+                    <h3 style="color: #88736F;">Simon says</h3>
             <p style="color: #88736F;">Streak: <span class="streak-count">{{ streak }}</span></p>
             <p style="color: #88736F;">HP: <span class="health-points">{{ health_points }}</span></p>
         </div>

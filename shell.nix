@@ -18,6 +18,7 @@ let
     python.pandas
     python.requests
     python.google-genai
+    python.flask
     # python.keras
   ]);
   buildInputAlias = [

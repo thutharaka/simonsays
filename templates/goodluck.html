@@ -8,11 +8,15 @@
 <body>
     <nav class="nav"><a class="nav-home" href="{{ url_for('dashboard') }}">Home</a></nav>
     <div class="container">
-        <h1>Good luck!</h1>
-        <p> The world is your canvas 🙂</p> 
+        <h1>simon says good luck!</h1>
+        <p> The world is your canvas :)</p> 
             
     </marquee>
     </div>
-    
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ url_for('dashboard') }}";
+        }, 10000);
+    </script>
 </body>
 </html>

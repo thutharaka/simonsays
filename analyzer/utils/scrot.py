@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-import options
+import analyzer.options as options
 
 def scrot() -> str:
     os.makedirs(options.DEFAULT_CACHE_DIR, exist_ok=True)

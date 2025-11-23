@@ -5,6 +5,7 @@ import asyncio
 import threading
 from script import get_ss
 from state import SingletonState
+from analyzer.analyzer import analyze
 
 # Initialize variables in the server
 app = Flask(__name__)
@@ -45,8 +46,10 @@ async def periodic_task():
     while singleton.get_state() != 'off':
         print("Task started")
         print('Task is running...')
-        get_ss()    # dummy fcn to rep sshot logic
-        await asyncio.sleep(5) # run every 5 seconds
+        # get_ss()    # dummy fcn to rep sshot logic
+        await asyncio.sleep(12)
+        if singleton.get_state() != 'off':
+            analyze(tasks)
 
 def background_loop(loop):
     asyncio.set_event_loop(loop)
@@ -86,6 +89,12 @@ def goodluck():
 def simonsays():
     return render_template("simonsays.html")
 
+
+@app.route("/finish/")
+def finish():
+    return render_template("finish.html")
+
+
 @app.route("/start", methods=["POST"])
 def start():
     global running, start_time
@@ -113,7 +122,7 @@ def stop():
         last_elapsed = time.time() - start_time
         # on_stop()
 
-    return redirect(url_for("simonsays"))
+    return redirect(url_for("finish"))
 
 
 @app.route("/taskinput")
@@ -153,7 +162,8 @@ def dashboard():
         completed=completed_habits
     )
 
+loop = asyncio.new_event_loop()
+t = threading.Thread(target=background_loop, args=(loop,))
+
 if __name__ == "__main__":
-    loop = asyncio.new_event_loop()
-    t = threading.Thread(target=background_loop, args=(loop,))
     app.run(debug=True)

@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simon Says</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="nav"><a class="nav-home" href="{{ url_for('dashboard') }}">Home</a></nav>
+    <div class="container">
+        <p class="small-text">simon says...</p>
+        <h1 class="big-text">
+            good job!<br>
+            cya next time!<br>
+            <3
+        </h1>
+    </div>
+    <div class="image-container">
+        <img src="{{ url_for('static', filename='hihi.png') }}" alt="shame" class="image">
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ url_for('dashboard') }}";
+        }, 10000);
+    </script>
+</body>
+</html>

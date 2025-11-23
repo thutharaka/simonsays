@@ -1,5 +1,5 @@
 import subprocess
-import options
+import analyzer.options as options
 import os
 
 UIED_PATH = os.getenv("UIED_PATH")
