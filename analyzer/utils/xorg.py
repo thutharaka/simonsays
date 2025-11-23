@@ -27,15 +27,22 @@ def get_current_windows() -> list[dict]:
     for window in res.stdout.split('\n'):
         if window == "": continue
         # TODO games can be handled here, we can extract window titles
-        window_hex, desktop, pid, x, y, w, h = window.split()[:7]
+        window_hex, desktop, pid, _, __, w, h = window.split()[:7]
         if int(desktop) != current_desktop: continue
+
+        # We don't use x,y values from wmctrl because that's apparently a 
+        # relative value, so we're forced to invoke xwininfo instead
+        abs_xy_res = subprocess.run(['xwininfo', '-id', window_hex], capture_output=True, text=True, check=True)
+        abs_x = int(abs_xy_res.stdout.split('\n')[3].split(":")[1])
+        abs_y = int(abs_xy_res.stdout.split('\n')[4].split(":")[1])
+
         current_windows.append({
             "xorg_hex": int(window_hex, 16),
             "pid": int(pid),
-            "column_min": int(x),
-            "column_max": int(x) + int(w),
-            "row_min": int(y),
-            "row_max": int(y) + int(h)
+            "column_min": abs_x,
+            "column_max": abs_x + int(w),
+            "row_min": abs_y,
+            "row_max": abs_y + int(h)
         })
     return current_windows
 
@@ -43,11 +50,15 @@ def get_current_windows() -> list[dict]:
 def get_window_at_coords(x: int, y: int, windows, stacking_list) -> tuple:
     """ Returns the xorg hex, PID of the window at coords """
     potential_windows = []
+    print(windows)
     for window in windows:
         is_within_window = (
             x >= window["column_min"] and x <= window["column_max"] and
             y >= window["row_min"] and y <= window["row_max"]
         )
+        print(f"{window["xorg_hex"]}: {is_within_window}")
+        print(f"{x} >= {window['column_min']} and {x} <= {window['column_max']}")
+        print(f"{y} >= {window['row_min']} and {y} <= {window['row_max']}")
         if is_within_window:
             potential_windows.append((window["xorg_hex"], window["pid"]))
 
@@ -56,7 +67,8 @@ def get_window_at_coords(x: int, y: int, windows, stacking_list) -> tuple:
             if hex == stacking_hex:
                 return hex, pid
 
-    raise Exception("Couldn't find a window at coords")
+    return None
+    # raise Exception("Couldn't find a window at coords")
 
 
 def get_window_title(hex: int) -> str:

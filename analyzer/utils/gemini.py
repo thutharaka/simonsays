@@ -28,6 +28,7 @@ def build_gemini_prompt(user_tasks: list[str], distractions: list[str]) -> str:
 
 
 def parse_gemini_results(res: str) -> list[bool]:
+    if not res: return []
     kill_list = []
     for line in res.split('\n'):
         if line == "KEEP":

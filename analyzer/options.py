@@ -5,4 +5,5 @@ DEFAULT_SCROT_FILENAME="scr.png"
 DEFAULT_SCROT_FILE=f"{DEFAULT_CACHE_DIR}/{DEFAULT_SCROT_FILENAME}"
 
 # UIED options
-UIED_PATH = "/home/ian/lib/bin/UIED"
+UIED_DEFAULT_PATH = "/home/ian/lib/bin/UIED"
+

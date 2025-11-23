@@ -7,7 +7,7 @@ import utils.xorg as xorg
 user_tasks = [
     "writing code",
     # "listen to music",
-    "research for upcoming project about shoes",
+    # "research for upcoming project about shoes",
     # "practice programming in general"
 ]
 
@@ -26,6 +26,8 @@ def analyze():
     # 0. fetch currently active windows
     current_windows = xorg.get_current_windows()
     stacking_list = xorg.get_stacking_list()
+    print(current_windows)
+    print(stacking_list)
     # 1. UIED on scrot
     scrot_file = scrot()
     xorg.notify("Simon is thinking...",
@@ -46,13 +48,17 @@ def analyze():
     print(kill_clusters)
     # 4. kill windows
     kill_pos = [
-        ((c["column_max"] + c["column_min"]) / 2, (c["row_max"] + c["row_min"]) / 2)
+        (round((c["column_max"] + c["column_min"]) / 2), round((c["row_max"] + c["row_min"]) / 2))
         for c in kill_clusters
     ]
 
     pids_to_kill = set()
     for x, y in kill_pos:
-        pids_to_kill.add(xorg.get_window_at_coords(x, y, current_windows, stacking_list))
+        pids = xorg.get_window_at_coords(x, y, current_windows, stacking_list)
+        if pids:
+            pids_to_kill.add(pids)
+        else:
+            print(f"Warn: ignoring {x}, {y} because bad coordinates")
 
     if not pids_to_kill:
         xorg.notify("Simon says, Carry on B^)",
@@ -61,14 +67,7 @@ def analyze():
         xorg.notify("Simon catches you red-handed!",
                     f"Killing {xorg.get_window_title(hex)}!")
         subprocess.run(['kill', str(pid)])
-    # - determine current desktop
-    # xprop -root _NET_CURRENT_DESKTOP
-    # - determine possible pid's and window hexcodes for a position
-    # wmctrl -lGp 
-    # - refer to xprop to see which one is actually above
-    # xprop -root _NET_CLIENT_LIST_STACKING
 
-    # 5. notify + change wallpaper
-    pass
+    # 5. change wallpaper briefly
 
 analyze()

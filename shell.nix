@@ -25,6 +25,7 @@ let
     pkgs.python3Packages.pip
     pkgs.scrot
     pkgs.wmctrl
+    pkgs.xorg.xwininfo
   ];
 in
 pkgs.stdenv.mkDerivation {
